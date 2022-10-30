@@ -1,0 +1,23 @@
+﻿@model IEnumerable<DepartCabCont>
+<h1>Contador de empleados que están asignados a los departamentos.</h1>
+<table class="table table-bordered">
+    <thead class="thead-light">
+        <tr>
+            <th>Departamento</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var departCabCont in Model)
+        {
+            <tr>
+                <td>
+                    @departCabCont.Departamento
+                </td>
+                <td>
+                    @departCabCont.Contador
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

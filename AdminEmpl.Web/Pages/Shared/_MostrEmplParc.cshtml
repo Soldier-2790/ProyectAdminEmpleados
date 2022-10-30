@@ -1,0 +1,20 @@
+﻿@model Empleado
+@{
+    var fotodir = $"~/images/{(Model.FotoDir ?? "noimage.jpg")}";
+    var mostrBot = (bool)ViewData["MostrBot"];
+}
+<div class="card m-3" style="min-width:18rem;max-width:30.5%;">
+    <div class="card-header">
+        <h3>@Model.Nombre</h3>
+        <h1>@Model.Id</h1>
+    </div>
+    <img class="card-img-top imageThumbnail" src="@fotodir" asp-append-version="true" />
+    @if (mostrBot)
+    {
+        <div class="card-footer text-center">
+            <a asp-page="/Empleados/Detalles" asp-route-ID="@Model.Id" class="btn btn-primary m-1">Ver</a>
+            <a asp-page="/Empleados/Editar" asp-route-ID="@Model.Id" class="btn btn-primary m-1">Editar</a>
+            <a asp-page="/Empleados/Borrar" asp-route-ID="@Model.Id" class="btn btn-danger m-1">Borrar</a>
+        </div>
+    }
+</div>
