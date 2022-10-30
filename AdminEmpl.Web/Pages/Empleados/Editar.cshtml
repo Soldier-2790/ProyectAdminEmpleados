@@ -1,0 +1,84 @@
+﻿@page "{id:min(1)?}/{handler?}"
+@model AdminEmpl.Web.Pages.Empleados.EditarModel
+@{
+    ViewData["Title"] = "Editar empleado";
+    var fotodir = $"~/images/{Model.Empleado.FotoDir ?? "noimage.jpg"}";
+    var pagEncab = Model.Empleado.Id > 0 ? "Editar" : "Agregar";
+}
+<h1>Notificación de preferencias</h1>
+<form method="post" asp-page-handler="ActNotifPref">
+    <div class="form-check">
+        <input asp-for="Notif" class="form-check-input" />
+        <label asp-for="Notif" class="form-check-label">Recibiste un correo donde notifica que tus detalles cambiaron.</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Notificar de actualización de preferencias.</button>
+    <!--
+    @if (!string.IsNullOrEmpty(Model.Msg))
+    {
+        <div class="alert alert-primary">
+            @Model.Msg
+        </div>
+    }
+    -->
+</form>
+<h1>@pagEncab</h1>
+<form method="post" class="mt-3" enctype="multipart/form-data" asp-page-handler="OnPost">
+    <input hidden asp-for="Empleado.Id" />
+    <input hidden asp-for="Empleado.FotoDir" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group row">
+        <label asp-for="Empleado.Nombre" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Empleado.Nombre" class="form-control" placeholder="Nombre del empleado." />
+            <span asp-validation-for="Empleado.Nombre" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Empleado.CorreoE" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Empleado.CorreoE" class="form-control" placeholder="Correo electronico del empleado." />
+            <span asp-validation-for="Empleado.CorreoE" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Empleado.Depart" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <!--Sí queremos usar una lista seleccionable y tenemos datos podemos usar lo siguiente:-->
+            <!--En la propiedad de la etiqueta select, asp-items le ponemos de valor Html.GetEnumSelectList<[Nombre de la lista]>().-->
+            <!--Además debemos ir a _ViewImports.cshtml en donde se encuentran los using o librerias que itiliza la página.-->
+            <select asp-for="Empleado.Depart" class="col-sm-2 col-form-label" asp-items="Html.GetEnumSelectList<Departamento>()">
+                <option value="">Por favor selecciona el departamento.</option>
+            </select>
+            <span asp-validation-for="Empleado.Depart" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row col-sm-4 offset-4">
+        <img class="imageThumbnail" src="@fotodir" asp-append-version="true" />
+    </div>
+    <div class="form-group row">
+        <label asp-for="foto" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input asp-for="foto" class="custom-file-input form-control" />
+                <label class="custom-file-label">Seleccionar foto</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a asp-page="/Empleados/Index" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var imagenname = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(imagenname);
+                });
+            });
+        </script>
+        <partial name="_ValidationScriptsPartial" />
+    }
+</form>

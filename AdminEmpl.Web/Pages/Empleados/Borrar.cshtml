@@ -1,0 +1,16 @@
+﻿@page "{id}"
+@model AdminEmpl.Web.Pages.Empleados.BorrarModel
+@{
+    ViewData["Title"] = "Borrar empleado";
+    ViewData["MostrBot"] = false;
+}
+<h2>Borrar empleado</h2>
+<h1>Confirmación de eliminación del empleado</h1>
+<div class="alert alert-danger">
+    <partial name="_MostrEmplParc" model="Model.Empleado" view-data="ViewData" />
+    <h5>Estás seguro de eliminar al empleado - @Model.Empleado.Nombre</h5>
+    <form method="post">
+        <button type="submit" class="btn btn-danger">Sí</button>
+        <a class="btn btn-primary" asp-page="/Empleados/Index">No</a>
+    </form>
+</div>

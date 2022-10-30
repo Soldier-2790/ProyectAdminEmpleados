@@ -1,0 +1,55 @@
+﻿@page
+<!--Mediante la propiedad page de Razor podemos asignarle una dirección especial de la página referente.-->
+<!--Mediante el ruteo o consulta de direcciones, los sitios o aplicaciones web pueden realizar acciones como obtogar acceso a algo.-->
+<!--Para cambiar la dirección de la página actual mediante Razor, se hace añadiendo un valor a la propiedad page.-->
+<!--Ejemplo: page "[Dirección personalizada]" -> page "EmpleadosList"-->
+<!--Tambien mediante el routin se puede hacer una busqueda mediante parámetros.-->
+<!--Ejemplo: page "{propiedad}" -> page "{Nombre}"-->
+<!--Además podemos hacer una implementación con exigir un tipo de parámetro o valor, es decir el valor del parámetro por ruteo puede ser específico.-->
+<!--Ejemplo: page "{propiedad:tipovalor}" -> page "{Nombre:alpha}"-->
+@model AdminEmpl.Web.Pages.Empleados.IndexModel
+@{
+	//Asignamos valores a la propiedad ViewData
+    ViewData["Title"] = "Inicio empleados";
+    ViewData["MostrBot"] = true;
+}
+<style>
+    .btn {
+        width: 75px;
+    }
+</style>
+<form method="get">
+    <div class="input-group">
+        <input class="form-control" asp-for="TermBusq" />
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </div>
+</form>
+@*await Component.InvokeAsync("CabCont");*@
+<vc:cab-cont depart-nom="@null"></vc:cab-cont>
+<h1 class="display-4">Empleados</h1>
+<h3>@Model.Empleados.Count()</h3><!--Muestra la cantidad de empleados-->
+<div class="card-deck">
+    <!--Se realiza un ciclo mediante la cantidad de elementos que tiene el objeto Empleados.-->
+    <!--Mediante Razor se invoca mediante el objeto referente a la parte del servidor.-->
+    @foreach (var empleados in Model.Empleados)
+    {
+        /*
+        var fotodir = $"~/images/{(empleados.FotoDir ?? "noimage.jpg")}";
+        <div class="card m-3" style="min-width:18rem;max-width:30.5%;">
+        <div class="card-header">
+        <h3>@empleados.Nombre</h3>
+        <h1>@empleados.Id</h1>
+        </div>
+        <img class="card-img-top imageThumbnail" src="@fotodir" asp-append-version="true" />
+        <div class="card-footer text-center">
+        <a asp-page="/Empleados/Detalles" asp-route-ID="@empleados.Id" class="btn btn-primary m-1">Ver</a>
+        <a asp-page="/Empleados/Editar" asp-route-ID="@empleados.Id" class="btn btn-primary m-1">Editar</a>
+        <a asp-page="/Empleados/Borrar" asp-route-ID="@empleados.Id" class="btn btn-danger m-1">Borrar</a>
+        </div>
+        </div>
+        */
+        <partial name="_MostrEmplParc" model="empleados" view-data="ViewData" />
+    }
+</div>

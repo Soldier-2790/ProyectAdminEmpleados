@@ -1,0 +1,69 @@
+﻿@page "empleado/ver/{id:min(1)}"
+<!--Mediante el routin podemos esconder los parámetros que se están mandando por medio de direcciones personalizadas.-->
+<!--Ejemplo: page "{variable}" -> page "{id}"-->
+<!--Para evitar errores con la busqueda de datos por medio de ruteo podemos personalizar la ruta por medio de la propiedad page.-->
+<!--Ejemplo: page "[NombParte]/{variable}" -> page "ver/{id}"-->
+<!--Podemos añadir restricciones mediante una clase que contengan reglas de ruteo con podemos personalizar la entrada de usuarios.-->
+<!--Ejemplo: Creen una clase desde el proyecto en donde se encuentra el sitio web.-->
+<!--En el archivo startup.cs busquen las opciones de ruteo y añada la restricción.-->
+<!--Aplicación page "[Direccionamiento personalizado *opcional*]/{Variable:[Nombre de la regla]}"-->
+<!--page "empleado/ver/{id:even}"-->
+@model AdminEmpl.Web.Pages.Empleados.DetallesModel
+@{
+    ViewData["Title"] = "Detalles";
+    var fotodir = $"~/images/{Model.Empleado.FotoDir ?? "noimage.jpg"}";
+}
+<h1>Detalles</h1>
+<div class="row justify-content-center m-3">
+    <!--
+    @if (!string.IsNullOrEmpty(Model.Msg))
+    {
+        <div class="col-sm-8">
+            <div class="alert alert-primary">
+                @Model.Msg
+            </div>
+        </div>
+    }
+    -->
+    <!--
+    @if (TempData["Msg"] != null)
+    {
+        <div class="col-sm-8">
+            <div class="alert alert-primary">
+                @TempData["Msg"]
+            </div>
+        </div>
+    }
+    -->
+    @if (Model.Msg != null)
+    {
+        <div class="col-sm-8">
+            <div class="alert alert-primary">
+                @Model.Msg
+            </div>
+        </div>
+    }
+<div class="col-sm-8">
+    @*await Component.InvokeAsync("CabCont",new { depart = Model.Empleado.Depart });*@
+    <vc:cab-cont depart-nom="@Model.Empleado.Depart"></vc:cab-cont>
+    
+</div>
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.Empleado.Nombre</h1>
+            </div>
+            <div class="card-body text-center">
+                <img class="card-img-top" src="@fotodir" asp-append-version="true" />
+                <h4>Empleado ID: @Model.Empleado.Id</h4>
+                <h4>Correo electronico: @Model.Empleado.CorreoE</h4>
+                <h4>Departamento: @Model.Empleado.Depart</h4>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-page="index" class="btn btn-primary">Volver</a>
+                <a asp-page="/Empleados/Editar" asp-route-ID="@Model.Empleado.Id" class="btn btn-primary m-1">Editar</a>
+                <a asp-page="/Empleados/Borrar" asp-route-ID="@Model.Empleado.Id" class="btn btn-danger m-1">Borrar</a>
+            </div>
+        </div>
+    </div>
+</div>
