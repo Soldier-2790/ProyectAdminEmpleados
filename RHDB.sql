@@ -1,6 +1,3 @@
-Declare Varchar(100)
-Create Database []
-Go
 USE [dwirhedb]
 GO
 /****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 26/07/2022 05:36:09 p. m. ******/
